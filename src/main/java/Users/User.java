@@ -6,6 +6,8 @@ import Models.Order;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toCollection;
+
 public class User {
     private int id;
     private String name;
@@ -16,6 +18,9 @@ public class User {
     }
 
     public ArrayList<Order> getOrders() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return AdminPanel.orders
+                .stream()
+                .filter(order -> order.getUserId() == id)
+                .collect(toCollection(ArrayList::new));
     }
 }
