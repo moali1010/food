@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class AdminPanel {
+    public static LocalDate todayDate;
     public static ArrayList<Restaurant> restaurants = new ArrayList<>();
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<Discount> discounts = new ArrayList<>();

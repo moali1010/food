@@ -1,11 +1,12 @@
 package Models;
 
 import JavaFood.AdminPanel;
+import com.google.gson.JsonObject;
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 public class Restaurant {
@@ -31,43 +32,77 @@ public class Restaurant {
     final LinkedHashMap<Food, Integer> foods = new LinkedHashMap<>();
     private Boolean isOpen = false;
 
-    public Restaurant(Integer id, String name, String address, int openHour, int closeHour, RestaurantTypes type) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public Restaurant(Integer id, String name, String address,
+                      int openHour, int closeHour, RestaurantTypes type) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.openHour = openHour;
+        this.closeHour = closeHour;
+        this.type = type;
     }
 
     public void openRestaurant() {
-        throw new UnsupportedOperationException("not implemented yet");
+        isOpen = true;
     }
 
     public void closeRestaurant() {
-        throw new UnsupportedOperationException("not implemented yet");
+        isOpen = false;
     }
 
     public void addFood(Food food, Integer quantity) {
-        throw new UnsupportedOperationException("not implemented yet");
+        foods.put(food, quantity);
     }
 
     public int getTodayOrdersCount() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return (int) AdminPanel.orders.stream()
+                .filter(order ->
+                        order.getOrderDateTime().getDayOfYear() ==
+                                LocalDateTime.now().getDayOfYear())
+                .count();
     }
 
     public int getAllOrdersCount() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return AdminPanel.orders.size();
     }
 
     public Double getTodayOrdersAmount() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return AdminPanel.orders.stream()
+                .filter(order ->
+                        order.getOrderDateTime().getDayOfYear() ==
+                                LocalDateTime.now().getDayOfYear())
+                .mapToDouble(Order::getTotalPrice)
+                .sum();
     }
 
     public Double getAllOrdersAmount() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return AdminPanel.orders.stream()
+                .mapToDouble(Order::getTotalPrice)
+                .sum();
     }
 
     public void updateFoodQuantity(Food food, Integer quantity) {
-        throw new UnsupportedOperationException("not implemented yet");
+        foods.put(food, quantity);
     }
 
     public Food getMostOrderedFood() {
-        throw new UnsupportedOperationException("not implemented yet");
+        HashMap<Food, Integer> orderedFoods = new HashMap<>();
+        for (Order order : AdminPanel.orders) {
+            for (Food food : foods.keySet()) {
+                if (order.getFoods().containsKey(food)) {
+                    if (orderedFoods.containsKey(food)) {
+                        orderedFoods.put(food, orderedFoods.get(food)
+                                + order.getFoods().get(food));
+                    } else {
+                        orderedFoods.put(food, order.getFoods().get(food));
+                    }
+                }
+            }
+        }
+        return orderedFoods.entrySet()
+                .stream()
+                .max(Comparator.comparingInt(Map.Entry::getValue))
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 }

@@ -9,6 +9,8 @@ public class Food {
     private Double price;
 
     public Food(Integer id, String name, Double price) {
-        throw new UnsupportedOperationException("not implemented yet");
+        this.id = id;
+        this.name = name;
+        this.price = price;
     }
 }

@@ -20,11 +20,21 @@ public class Discount {
         AMOUNT
     }
 
-    public Discount(Integer id, String code, Double amount, LocalDate expireDate, Integer userId) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public Discount(Integer id, String code,
+                    Double amount, LocalDate expireDate, Integer userId) {
+        this.id = id;
+        this.code = code;
+        this.amount = amount;
+        this.expireDate = expireDate;
+        this.userId = userId;
     }
 
-    public Discount(Integer id, String code, Integer percentage, LocalDate expireDate, Integer userId) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public Discount(Integer id, String code,
+                    Integer percentage, LocalDate expireDate, Integer userId) {
+        this.id = id;
+        this.code = code;
+        this.percentage = percentage;
+        this.expireDate = expireDate;
+        this.userId = userId;
     }
 }
