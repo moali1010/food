@@ -2,12 +2,15 @@ package Users;
 
 import JavaFood.AdminPanel;
 import Models.Order;
+import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toCollection;
 
+@Data
 public class User {
     private int id;
     private String name;
