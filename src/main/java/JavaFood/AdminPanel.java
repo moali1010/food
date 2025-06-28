@@ -47,7 +47,6 @@ public class AdminPanel {
                     Food f = new Food(foodObj.get("id").getAsInt(), foodObj.get("name").getAsString(), foodObj.get("price").getAsDouble());
                     r.addFood(f, foodObj.get("quantity").getAsInt());
                 }
-
                 addRestaurant(r);
             }
 
@@ -151,10 +150,27 @@ public class AdminPanel {
     }
 
     public Restaurant getBestRestaurant() {
-        return restaurants.get(0);
+        double maxScore = 0;
+        Restaurant bestRestaurant = null;
+        for (Restaurant r : restaurants) {
+            if (r.getScore() > maxScore) {
+                maxScore = r.getScore();
+                bestRestaurant = r;
+            }
+        }
+        return bestRestaurant;
     }
 
     public Restaurant getMostOrderedRestaurant() {
-        return restaurants.get(0);
+        int maxOrder = 0;
+        Restaurant bestRestaurant = null;
+        for (Restaurant r : restaurants) {
+            int orderCount = r.getTodayOrdersCount();
+            if (orderCount > maxOrder) {
+                maxOrder = orderCount;
+                bestRestaurant = r;
+            }
+        }
+        return bestRestaurant;
     }
 }
